@@ -29,7 +29,6 @@ var fight = function (enemyName, enemyHealth, enemyAttack) {
     }
     //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
     enemyHealth -= playerAttack;
-
     // Log a resulting message to the console so we know that it worked.
     console.log(
       playerName +
@@ -78,9 +77,17 @@ var fight = function (enemyName, enemyHealth, enemyAttack) {
 var main = function () {
   window.alert("Welcome to Robot Gladiators!");
   for (var i = 0; i < enemyNames.length; i++) {
-    var enemyHealth = 50;
-    var enemyAttack = 12;
-    fight(enemyNames[i], enemyHealth, enemyAttack);
+    if (playerHealth > 0) {
+      window.alert("Round " + (i + 1) + " begins...");
+      var enemyHealth = 50;
+      var enemyAttack = 12;
+      fight(enemyNames[i], enemyHealth, enemyAttack);
+    } else {
+      window.prompt(
+        "Your robot has lost all of its health and died... better luck next time!"
+      );
+      break;
+    }
   }
 };
 
