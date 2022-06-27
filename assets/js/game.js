@@ -20,7 +20,7 @@ var fight = function (enemyName, enemyHealth, enemyAttack) {
       );
       if (confirmSkip) {
         window.alert(playerName + " has chosen to skip the fight!");
-        playerMoney -= 10;
+        playerMoney = Math.max(10,playerMoney-10);
         console.log("playerMoney", playerMoney);
         break;
       } else {
@@ -28,7 +28,8 @@ var fight = function (enemyName, enemyHealth, enemyAttack) {
       }
     }
     //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
-    enemyHealth -= playerAttack;
+    var damage = randomNum(playerAttack-3,playerAttack);
+    enemyHealth = Math.max( enemyHealth - damage,0);
     // Log a resulting message to the console so we know that it worked.
     console.log(
       playerName +
@@ -42,7 +43,8 @@ var fight = function (enemyName, enemyHealth, enemyAttack) {
     );
 
     // Subtract the value of `enemyAttack` from the value of `playerHealth` and use that result to update the value in the `playerHealth` variable.
-    playerHealth -= enemyAttack;
+    damage = randomNum(enemyAttack-3,enemyAttack);
+    playerHealth = Math.max(0, playerHealth -damage);
 
     // Log a resulting message to the console so we know that it worked.
     console.log(
@@ -105,8 +107,8 @@ var startGame = function () {
   for (var i = 0; i < enemyNames.length; i++) {
     if (playerHealth > 0) {
       window.alert("Round " + (i + 1) + " begins...");
-      var enemyHealth = 50;
-      var enemyAttack = 12;
+      var enemyHealth = randomNum(20,60);
+      var enemyAttack = Math.floor(Math.random() * 20);;
       fight(enemyNames[i], enemyHealth, enemyAttack);
       if (i < enemyNames.length - 1 && playerHealth > 0) {
         var enterShop = window.confirm("Would you like to enter the shop?");
@@ -162,4 +164,8 @@ var shop = function () {
       break;
   }
 };
+
+var randomNum = function (min,max){
+  return Math.floor(Math.random()*(max-min+1))+min;
+}
 startGame();
