@@ -94,42 +94,20 @@ var enemyInfo = [
 
 // initiliaze fight
 var fight = function (pickedEnemyObject) {
+  var isPlayerTurn = true;
+  if (Math.random() > 0.5) {
+    isPlayerTurn = false;
+  }
   while (pickedEnemyObject.health > 0 && playerInfo.health > 0) {
     // ask player if they want to fight or skip
-    if (fightOrSkip()) {
-      break;
+    if (isPlayerTurn) {
+      if (fightOrSkip()) {
+        break;
+      }
+      initiatePlayerAttack(pickedEnemyObject);
+    } else {
+      initiateEnemyAttack(pickedEnemyObject);
     }
-    //Subtract the value of `playerInfo.attack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
-    var damage = randomNum(playerInfo.attack - 3, playerInfo.attack);
-    pickedEnemyObject.health = Math.max(pickedEnemyObject.health - damage, 0);
-    // Log a resulting message to the console so we know that it worked.
-    console.log(
-      playerInfo.name +
-        " attacked " +
-        pickedEnemyObject.name +
-        ". " +
-        pickedEnemyObject.name +
-        " now has " +
-        pickedEnemyObject.health +
-        " health remaining."
-    );
-
-    // Subtract the value of `enemyAttack` from the value of `playerInfo.health` and use that result to update the value in the `playerInfo.health` variable.
-    damage = randomNum(pickedEnemyObject.attack - 3, pickedEnemyObject.attack);
-    playerInfo.health = Math.max(0, playerInfo.health - damage);
-
-    // Log a resulting message to the console so we know that it worked.
-    console.log(
-      pickedEnemyObject.name +
-        " attacked " +
-        playerInfo.name +
-        ". " +
-        playerInfo.name +
-        " now has " +
-        playerInfo.health +
-        " health remaining."
-    );
-
     // check enemy's health
     if (pickedEnemyObject.health <= 0) {
       window.alert(pickedEnemyObject.name + " has died!");
@@ -140,12 +118,12 @@ var fight = function (pickedEnemyObject) {
           pickedEnemyObject.health +
           " health left."
       );
+      isPlayerTurn=!isPlayerTurn;
     }
 
     // check player's health
     if (playerInfo.health <= 0) {
       window.alert(playerInfo.name + " has died!");
-      console.log(playerInfo.name + " has died!");
       break;
     } else {
       window.alert(
@@ -155,8 +133,42 @@ var fight = function (pickedEnemyObject) {
   }
 };
 
+var initiatePlayerAttack = function (pickedEnemyObject) {
+  //Subtract the value of `playerInfo.attack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
+  var damage = randomNum(playerInfo.attack - 3, playerInfo.attack);
+  pickedEnemyObject.health = Math.max(pickedEnemyObject.health - damage, 0);
+  // Log a resulting message to the console so we know that it worked.
+  window.alert(
+    playerInfo.name +
+      " attacked " +
+      pickedEnemyObject.name +
+      ". " +
+      pickedEnemyObject.name +
+      " now has " +
+      pickedEnemyObject.health +
+      " health remaining."
+  );
+};
+
+var initiateEnemyAttack = function (pickedEnemyObject) {
+  // Subtract the value of `enemyAttack` from the value of `playerInfo.health` and use that result to update the value in the `playerInfo.health` variable.
+  damage = randomNum(pickedEnemyObject.attack - 3, pickedEnemyObject.attack);
+  playerInfo.health = Math.max(0, playerInfo.health - damage);
+
+  // Log a resulting message to the console so we know that it worked.
+  window.alert(
+    pickedEnemyObject.name +
+      " attacked " +
+      playerInfo.name +
+      ". " +
+      playerInfo.name +
+      " now has " +
+      playerInfo.health +
+      " health remaining."
+  );
+};
+
 var endGame = function () {
-  // window.alert("The game has now ended, let's check out your stats playa!");
   // if the player is still alive
   if (playerInfo.health > 0) {
     window.alert(
@@ -179,7 +191,7 @@ var endGame = function () {
 
 // function to start the game
 var startGame = function () {
-  playerInfo.reset;
+  playerInfo.reset();
   window.alert("Welcome to Robot Gladiators!");
   for (var i = 0; i < enemyInfo.length; i++) {
     if (playerInfo.health > 0) {
