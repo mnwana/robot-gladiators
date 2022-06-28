@@ -82,14 +82,14 @@ var enemyInfo = [
     name: "Roborto",
     attack: randomNum(10, 14),
   },
-  {
-    name: "Amy Android",
-    attack: randomNum(10, 14),
-  },
-  {
-    name: "Robo Trumble",
-    attack: randomNum(10, 14),
-  },
+  // {
+  //   name: "Amy Android",
+  //   attack: randomNum(10, 14),
+  // },
+  // {
+  //   name: "Robo Trumble",
+  //   attack: randomNum(10, 14),
+  // },
 ];
 
 // initiliaze fight
@@ -110,7 +110,8 @@ var fight = function (pickedEnemyObject) {
     }
     // check enemy's health
     if (pickedEnemyObject.health <= 0) {
-      window.alert(pickedEnemyObject.name + " has died!");
+      window.alert(pickedEnemyObject.name + " has died! You win 15 coins.");
+      playerInfo.money+=15;
     } else {
       window.alert(
         pickedEnemyObject.name +
@@ -178,6 +179,22 @@ var endGame = function () {
     );
   } else {
     window.alert("You lost your robot in battle :( ");
+  }
+  debugger;
+  var highScore = localStorage.getItem("highScore");
+  var highScorer = localStorage.getItem("highScorer");
+  if (highScore === null) {
+    highScore = 0;
+    highScorer='N/A';
+  }
+  if(playerInfo.money>highScore){
+    localStorage.setItem('highScore',playerInfo.money);
+    localStorage.setItem('highScorer', playerInfo.name);
+    window.alert(playerInfo.name + " now has the high score of " + playerInfo.money + "!");
+  }
+
+  else{
+    window.alert(highScorer + " has the high score of " + highScore + "!");
   }
 
   var playAgain = window.confirm("Would you like to play again?");
