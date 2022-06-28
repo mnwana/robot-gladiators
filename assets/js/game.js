@@ -17,11 +17,10 @@ var randomNum = function (min, max) {
 
 var fightOrSkip = function () {
   // ask player if they'd like to fight or skip using fightOrSkip function
-  var promptFight = window
-    .prompt(
-      'Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.'
-    )
-    .toLowerCase();
+  var promptFight = window.prompt(
+    'Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.'
+  );
+  promptFight = promptFight.toLowerCase();
 
   // Conditional Recursive Function Call
   if (!promptFight) {
@@ -97,7 +96,7 @@ var enemyInfo = [
 var fight = function (pickedEnemyObject) {
   while (pickedEnemyObject.health > 0 && playerInfo.health > 0) {
     // ask player if they want to fight or skip
-    if(fightOrSkip()){
+    if (fightOrSkip()) {
       break;
     }
     //Subtract the value of `playerInfo.attack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
@@ -207,21 +206,17 @@ var startGame = function () {
 
 var shop = function () {
   var shopOption = window.prompt(
-    "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+    "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE."
   );
-  console.log(playerInfo.money);
+  shopOption = parseInt(shopOption);
   switch (shopOption) {
-    case "refill":
-    case "REFILL":
-      playerInfo.refillHealth;
-
+    case 1:
+      playerInfo.refillHealth();
       break;
-    case "upgrade":
-    case "UPGRADE":
-      playerInfo.upgradeAttack;
+    case 2:
+      playerInfo.upgradeAttack();
       break;
-    case "leave":
-    case "LEAVE":
+    case 3:
       window.alert("Leaving the store");
       break;
     default:
