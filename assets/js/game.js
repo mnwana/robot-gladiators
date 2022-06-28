@@ -1,6 +1,16 @@
 // initialize player robot
+
+var getPlayerName = function () {
+  var playerName = window.prompt("What's your robot's name?");
+  var invalidValues = ['',null,' ', '  ']
+  while( invalidValues.includes(playerName) ){
+    playerName = window.prompt("Robot name cannot be empty... What's your robot's name?");
+  }
+  return playerName;
+}
+
 var playerInfo = {
-  name: window.prompt("What's your robot's name?"),
+  name: getPlayerName(),
   health: 100,
   attack: 10,
   money: 10,
